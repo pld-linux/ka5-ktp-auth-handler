@@ -1,15 +1,15 @@
-%define		kdeappsver	21.04.2
+%define		kdeappsver	21.04.3
 %define		kframever	5.56.0
 %define		qtver		5.9.0
 %define		kaname		ktp-auth-handler
 Summary:	ktp-auth-handler
 Name:		ka5-%{kaname}
-Version:	21.04.2
+Version:	21.04.3
 Release:	1
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Applications
 Source0:	http://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
-# Source0-md5:	a2785ae12f0edf5c8b05a33f07a15f9d
+# Source0-md5:	d4fbcc7cdb818ba4934b37e88aac588c
 URL:		http://www.kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5DBus-devel
