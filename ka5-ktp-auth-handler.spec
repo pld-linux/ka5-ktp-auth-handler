@@ -39,6 +39,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 KDE Telepathy authentication handler.
 
+%description -l pl.UTF-8
+Program obsługi do autentykacji KDE Telepathy.
+
 %prep
 %setup -q -n %{kaname}-%{version}
 
