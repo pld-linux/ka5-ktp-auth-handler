@@ -1,24 +1,26 @@
 #
 # Conditional build:
 %bcond_with	tests		# build with tests
+
 %define		kdeappsver	23.04.1
 %define		kframever	5.94.0
 %define		qtver		5.15.2
 %define		kaname		ktp-auth-handler
-Summary:	ktp-auth-handler
+Summary:	KDE Telepathy authentication handler
+Summary(pl.UTF-8):	Obsługa uwierzytelniania Telepathy w KDE
 Name:		ka5-%{kaname}
 Version:	23.04.1
-Release:	1
+Release:	2
 License:	GPL v2+/LGPL v2.1+
 Group:		X11/Applications
 Source0:	https://download.kde.org/stable/release-service/%{kdeappsver}/src/%{kaname}-%{version}.tar.xz
 # Source0-md5:	19c8cacab7888ecea53ccbffe6e250a0
-URL:		http://www.kde.org/
+URL:		https://kde.org/
 BuildRequires:	Qt5Core-devel >= %{qtver}
 BuildRequires:	Qt5DBus-devel
 BuildRequires:	Qt5Gui-devel
 BuildRequires:	Qt5Network-devel
-BuildRequires:	cmake >= 2.8.12
+BuildRequires:	cmake >= 3.16
 BuildRequires:	gettext-devel
 BuildRequires:	ka5-kaccounts-integration-devel >= %{kdeappsver}
 BuildRequires:	ka5-ktp-common-internals-devel >= %{kdeappsver}
@@ -32,18 +34,19 @@ BuildRequires:	libsignon-qt5-devel >= 8.55
 BuildRequires:	ninja
 BuildRequires:	qca-qt5-devel
 BuildRequires:	qt5-build >= %{qtver}
-BuildRequires:	rpmbuild(macros) >= 1.164
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	shared-mime-info
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	telepathy-qt5-devel >= 0.9.8
 BuildRequires:	xz
+Requires:	telepathy-mission-control
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 KDE Telepathy authentication handler.
 
 %description -l pl.UTF-8
-Program obsługi do autentykacji KDE Telepathy.
+Obsługa uwierzytelniania Telepathy w KDE.
 
 %prep
 %setup -q -n %{kaname}-%{version}
@@ -57,6 +60,7 @@ cd build
 	-DHTML_INSTALL_DIR=%{_kdedocdir} \
 	-DKDE_INSTALL_USE_QT_SYS_PATHS=ON \
 	..
+
 %ninja_build
 
 %if %{with tests}
@@ -66,6 +70,7 @@ ctest
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %ninja_install -C build
 
 %find_lang %{kaname} --all-name --with-kde
@@ -79,4 +84,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dbus-1/services/org.freedesktop.Telepathy.Client.KTp.ConfAuthObserver.service
 %{_datadir}/dbus-1/services/org.freedesktop.Telepathy.Client.KTp.SASLHandler.service
 %{_datadir}/dbus-1/services/org.freedesktop.Telepathy.Client.KTp.TLSHandler.service
-%{_datadir}/telepathy/clients
+%{_datadir}/telepathy/clients/KTp.ConfAuthObserver.client
+%{_datadir}/telepathy/clients/KTp.SASLHandler.client
+%{_datadir}/telepathy/clients/KTp.TLSHandler.client
